@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form Fix Audit</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<main>
+  <h1>Checkout Form (Fixed)</h1>
+  <form id="checkout" novalidate>
+    <label>Full Name <input name="name" required></label>
+    <label>Email <input name="email" type="email" required></label>
+    <label>Card <input name="card" pattern="\d{16}" inputmode="numeric" required aria-describedby="card-hint"></label>
+    <small id="card-hint">16 digits, numbers only.</small>
+    <button type="submit">Pay</button>
+  </form>
+  <pre id="out" aria-live="polite"></pre>
+</main>
+<script>
+const form = document.getElementById('checkout');
+const out = document.getElementById('out');
+form.addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const fd = new FormData(form);
+  const errs = [];
+  if(!fd.get('name')) errs.push('Name required');
+  const email = fd.get('email');
+  if(!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) errs.push('Valid email required');
+  if(!/^\d{16}$/.test(fd.get('card')||'')) errs.push('Card must be 16 digits');
+  if(errs.length){ out.textContent = 'Errors:\n- ' + errs.join('\n- '); return; }
+  out.textContent = 'OK: ' + JSON.stringify(Object.fromEntries(fd.entries()), null, 2);
+});
+</script>
+</body>
+</html>
