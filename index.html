@@ -10,9 +10,9 @@
 <main>
   <h1>Checkout Form (Fixed)</h1>
   <form id="checkout" novalidate>
-    <label>Full Name <input name="name" required></label>
-    <label>Email <input name="email" type="email" required></label>
-    <label>Card <input name="card" pattern="\d{16}" inputmode="numeric" required aria-describedby="card-hint"></label>
+    <label for="name">Full Name <input id="name" name="name" required></label>
+    <label for="email">Email <input id="email" name="email" type="email" required></label>
+    <label for="card">Card <input id="card" name="card" pattern="\d{16}" inputmode="numeric" required aria-describedby="card-hint"></label>
     <small id="card-hint">16 digits, numbers only.</small>
     <button type="submit">Pay</button>
   </form>
